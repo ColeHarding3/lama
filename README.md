@@ -43,7 +43,7 @@ Installation
 
 To install the API, first run:
 
-```> pastebin get q45K18dv lama-installer```
+```> pastebin get rf0HZ2mD lama-installer```
 
 which will give you the [installer](installer). After it downloaded, run it:
 
