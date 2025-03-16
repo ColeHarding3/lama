@@ -783,6 +783,7 @@ waypoint["goto"] = waypoint.moveto
     This function is idempotent.
 ]]
 function init()
+    print("cole test")
     private.resume()
 end
 
