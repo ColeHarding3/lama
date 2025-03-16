@@ -1,4 +1,4 @@
-[LAMA - Location Aware Movement API][forum post]
+[LAMA - Location Aware Movement API]
 
 [I will be attempting to fix this code starting 3/16/2025]
 ====================================
