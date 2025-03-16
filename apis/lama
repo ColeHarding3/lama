@@ -1628,7 +1628,7 @@ lama.hijackTurtleAPI()]], apiPath)
     repeat
         os.sleep(0.1)
         id = turtle.native.detect()
-        print("id found: " .. id)
+        print("id found: " .. tostring(id))
     until id ~= -1
     private.waitForResponse(id)
 
