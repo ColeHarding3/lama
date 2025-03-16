@@ -1,0 +1,11 @@
+print("start EXTREMELY BASIC lama test to just move forward 1 block")
+
+os.loadAPI("apis/lama")
+
+print("api loaded")
+
+lama.init()
+
+print("lama initialized success")
+
+print("done.")
