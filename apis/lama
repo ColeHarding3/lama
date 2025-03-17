@@ -1809,6 +1809,7 @@ function private.waitForResponse(ids)
     -- If ids is false or null, return true
     if not ids then  
         return true
+    end
 
     if type(ids) ~= "table" then
         ids = {ids}
@@ -1817,9 +1818,9 @@ function private.waitForResponse(ids)
     end
     local success = true
     repeat
-        print("running queued commands...")
+        print("waiting for turtle event")
         local event, responseID, result = os.pullEvent("turtle_response")
-        print("got turtle response")
+        print("got turtle event")
         if event == "turtle_response" then
             for i = 1, #ids do
                 if ids[i] == responseID then
