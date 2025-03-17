@@ -1542,7 +1542,7 @@ end
 ]]
 function private.resume(dontCrash)
 
-    print("private resume")
+    print("private resume start")
 
     if state.isInitialized then
         -- Already initialized successfully, nothing to do here.
@@ -1572,9 +1572,6 @@ function private.resume(dontCrash)
     -- MT: Moved assertions here from end of API file because assert failures were
     --     preventing the API from loading when stored in ROM (e.g. when included in a
     --     resource pack
-
-    print("Environment checking")
-
     assert(turtle, "The lama API can only run on turtles.")
     assert(os.getComputerLabel(), "Turtle has no label, required for state persistence.")
     assert(turtle.getFuelLevel() ~= "unlimited", "Turtles must use fuel for this API to work correctly.")
@@ -1597,8 +1594,6 @@ function private.resume(dontCrash)
         end
     end
     
-    print("Re-set startupScript to include the chosen apiPath")
-
     -- MT: Re-set startupScript to include the chosen apiPath
     startupScript = string.format(
 [[assert(os.loadAPI(%q))
@@ -1618,8 +1613,6 @@ lama.hijackTurtleAPI()]], apiPath)
     -- Load state, if any.
     local valid = private.load()
 
-    print("Process event queue (blocks until processed)")
-
     -- Process event queue (blocks until processed) and get the ID which is
     -- indicative of how long the turtle has lived (since command IDs grow
     -- steadily over the lifetime of a computer). This is used for the validity
@@ -1628,16 +1621,11 @@ lama.hijackTurtleAPI()]], apiPath)
     repeat
         os.sleep(0.1)
         id = turtle.native.detect()
-        print("id found: " .. tostring(id))
     until id ~= -1
     private.waitForResponse(id)
 
-    print("begin unwrap startup")
-
     -- Force unwrapping if we have at least one level of startup wrapper.
     private.unwrapStartup(true)
-
-    print("Ensure state validity using some tricks")
 
     -- Ensure state validity using some tricks...
     if state.fuel.id then
@@ -1658,8 +1646,6 @@ lama.hijackTurtleAPI()]], apiPath)
         valid = valid and turtle.getFuelLevel() == state.fuel.current
     end
 
-    print("If any validity check failed lock down the API.")
-
     -- If any validity check failed lock down the API.
     if not valid then
         -- This should not be possible if the API is used correctly, i.e. no
@@ -1670,8 +1656,6 @@ lama.hijackTurtleAPI()]], apiPath)
                "Failed to create invalidation file.").close()
         error("Invalid state. Please reinitialize the turtle's position.")
     end
-
-    print("Check if we performed a single move and finish any pending multi-try single moves")
 
     -- Check if we performed a single move and finish any pending multi-try
     -- single moves.
@@ -1721,8 +1705,6 @@ lama.hijackTurtleAPI()]], apiPath)
         private.save("fuel")
     end
 
-    print("If we're currently traveling towards a target location, continue doing")
-
     -- If we're currently traveling towards a target location, continue doing
     -- so after resolving possibly active single moves above.
     if state.path then
@@ -1742,13 +1724,9 @@ lama.hijackTurtleAPI()]], apiPath)
         end
     end
 
-    print("Done, don't run again, release thread lock!")
-
     -- Done, don't run again, release thread lock!
     state.isInitializing = nil
     state.isInitialized = true
-
-    print("resume success!!!")
 end
 
 -------------------------------------------------------------------------------
@@ -1818,9 +1796,9 @@ function private.waitForResponse(ids)
     end
     local success = true
     repeat
-        print("waiting for turtle event")
+        print("waiting for turtle_response")
         local event, responseID, result = os.pullEvent("turtle_response")
-        print("got turtle event")
+        print("got turtle_response")
         if event == "turtle_response" then
             for i = 1, #ids do
                 if ids[i] == responseID then
