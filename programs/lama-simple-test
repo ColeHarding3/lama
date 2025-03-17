@@ -1,6 +1,6 @@
 print("start EXTREMELY BASIC lama test to just move forward 1 block")
 
-os.loadAPI("apis/lama")
+local toyota = require("apis/lama")
 
 print("api loaded")
 
