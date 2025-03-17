@@ -1805,6 +1805,11 @@ end
     @private
 ]]
 function private.waitForResponse(ids)
+
+    -- If ids is false or null, return true
+    if not ids then  
+        return true
+
     if type(ids) ~= "table" then
         ids = {ids}
     elseif #ids == 0 then
