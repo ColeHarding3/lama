@@ -1814,6 +1814,7 @@ function private.waitForResponse(ids)
     repeat
         print("running queued commands...")
         local event, responseID, result = os.pullEvent("turtle_response")
+        print("got turtle response")
         if event == "turtle_response" then
             for i = 1, #ids do
                 if ids[i] == responseID then
