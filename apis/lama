@@ -1632,6 +1632,8 @@ lama.hijackTurtleAPI()]], apiPath)
     until id ~= -1
     private.waitForResponse(id)
 
+    print("begin unwrap startup")
+
     -- Force unwrapping if we have at least one level of startup wrapper.
     private.unwrapStartup(true)
 
@@ -1810,6 +1812,7 @@ function private.waitForResponse(ids)
     end
     local success = true
     repeat
+        print("running queued commands...")
         local event, responseID, result = os.pullEvent("turtle_response")
         if event == "turtle_response" then
             for i = 1, #ids do
